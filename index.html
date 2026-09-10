@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Md. Raiyan Mahmud — Control Systems Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --border:   #21262d;
+      --accent:   #58a6ff;
+      --accent2:  #3fb950;
+      --text:     #e6edf3;
+      --muted:    #8b949e;
+      --heading:  #f0f6fc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 2rem;
+      height: 56px;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      color: var(--heading); text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* SECTIONS */
+    section { padding: 6rem 0; }
+    .container { max-width: 780px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.04em;
+      color: var(--accent2);
+      background: rgba(63,185,80,0.08);
+      border: 1px solid rgba(63,185,80,0.2);
+      padding: 0.3rem 0.75rem; border-radius: 2rem;
+      width: fit-content;
+    }
+    .hero-tag::before { content: '●'; font-size: 0.6rem; }
+
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 6vw, 3.6rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--heading);
+      letter-spacing: -0.03em;
+    }
+    h1 span { color: var(--accent); }
+
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      max-width: 520px; line-height: 1.65;
+    }
+
+    .hero-links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.55rem 1.2rem; border-radius: 6px;
+      font-size: 0.85rem; font-weight: 500;
+      text-decoration: none; transition: all 0.2s; cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--accent); color: #0d1117;
+    }
+    .btn-primary:hover { background: #79c0ff; }
+    .btn-outline {
+      border: 1px solid var(--border); color: var(--text);
+      background: transparent;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTION HEADINGS */
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.75rem; font-weight: 700;
+      color: var(--heading); letter-spacing: -0.02em;
+      margin-bottom: 2rem;
+    }
+
+    /* ABOUT */
+    #about p { color: var(--muted); margin-bottom: 1rem; max-width: 640px; }
+    #about p:last-child { margin-bottom: 0; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .skill-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem; color: var(--text);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .skill-item::before { content: '▸'; color: var(--accent); font-size: 0.7rem; }
+
+    /* PROJECTS */
+    .projects-list { display: flex; flex-direction: column; gap: 1px; }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 1rem; margin-bottom: 0.5rem;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--heading);
+    }
+    .project-date {
+      font-size: 0.75rem; color: var(--muted);
+      white-space: nowrap; padding-top: 0.15rem;
+    }
+    .project-desc { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem; padding: 0.2rem 0.6rem;
+      border-radius: 4px; font-weight: 500;
+      background: rgba(88,166,255,0.1);
+      color: var(--accent);
+      border: 1px solid rgba(88,166,255,0.2);
+    }
+    .project-link {
+      font-size: 0.8rem; color: var(--accent);
+      text-decoration: none; display: inline-flex;
+      align-items: center; gap: 0.3rem; margin-top: 0.75rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* RESEARCH */
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 1.75rem;
+    }
+    .research-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--heading); margin-bottom: 0.4rem;
+      line-height: 1.4;
+    }
+    .research-meta {
+      font-size: 0.8rem; color: var(--accent2);
+      margin-bottom: 1rem; font-weight: 500;
+    }
+    .research-card p { font-size: 0.875rem; color: var(--muted); }
+
+    /* CONTACT */
+    #contact { border-top: 1px solid var(--border); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem; margin-top: 1.5rem;
+    }
+    .contact-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 0.9rem 1.1rem;
+      text-decoration: none; color: var(--text);
+      font-size: 0.875rem; transition: border-color 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); color: var(--accent); }
+    .contact-icon { font-size: 1.1rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.8rem; color: var(--muted);
+    }
+
+    /* DIVIDER */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      h1 { font-size: 2rem; }
+      section { padding: 4rem 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#hero">Raiyan Mahmud</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <span class="hero-tag">Open to Research Collaborations</span>
+        <h1>Md. Raiyan<br><span>Mahmud</span></h1>
+        <p class="hero-sub">
+          EEE student at RUET focused on Control Systems and Smart Grid Security.
+          Currently researching PID-Integrated AGC robustness under False Data Injection Attacks.
+          Targeting EMJMD 2027.
+        </p>
+        <div class="hero-links">
+          <a class="btn btn-primary" href="#research">View Research</a>
+          <a class="btn btn-outline" href="#projects">See Projects</a>
+          <a class="btn btn-outline" href="mailto:md.raiyanmahmud64@gmail.com">Email Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <p class="section-label">Background</p>
+      <h2>About Me</h2>
+      <p>
+        I'm a 3rd-year Electrical & Electronic Engineering student at Rajshahi University of
+        Engineering & Technology (RUET), Bangladesh. My core focus is Control Systems —
+        classical control theory, state-space methods, and optimization-based control.
+      </p>
+      <p>
+        I'm currently working on a research paper on the robustness of PID-Integrated AGC
+        under False Data Injection (FDI) attacks in smart grid environments — work that sits
+        at the intersection of control theory and cybersecurity. I'm building toward graduate
+        school in Europe (EMJMD 2027).
+      </p>
+      <p>
+        Before university, I was a cadet at Rangpur Cadet College — an experience that shaped
+        how I approach discipline, teamwork, and long-term goals.
+      </p>
+
+      <br>
+      <p class="section-label" style="margin-bottom:1rem;">Technical Skills</p>
+      <div class="skills-grid">
+        <div class="skill-item">MATLAB / Simulink</div>
+        <div class="skill-item">Python (NumPy, basics)</div>
+        <div class="skill-item">Control Systems</div>
+        <div class="skill-item">Arduino / Embedded C</div>
+        <div class="skill-item">Smart Grid Analysis</div>
+        <div class="skill-item">PID & Fractional-Order PID</div>
+        <div class="skill-item">Particle Swarm Optimization</div>
+        <div class="skill-item">Circuit Design & Simulation</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <p class="section-label">Hands-on Work</p>
+      <h2>Projects</h2>
+
+      <div class="projects-list">
+
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Arduino-Based Ultrasonic Radar System</span>
+            <span class="project-date">May – Jun 2026</span>
+          </div>
+          <p class="project-desc">
+            Dual-sensor radar combining HC-SR04 ultrasonic ranging and RCWL-0516 microwave
+            Doppler detection for object tracking and presence sensing. Data visualized through
+            a radar-style graphical interface, replicating conventional radar principles at small scale.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino</span>
+            <span class="tag">HC-SR04</span>
+            <span class="tag">RCWL-0516</span>
+            <span class="tag">Radar Visualization</span>
+          </div>
+          <a class="project-link" href="https://lnkd.in/p/guDhyaYU" target="_blank">
+            ↗ View on LinkedIn
+          </a>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Smart Line Follower with Obstacle Avoidance & Bluetooth Tracking</span>
+            <span class="project-date">May 2026</span>
+          </div>
+          <p class="project-desc">
+            Extended line follower robot with ultrasonic obstacle detection (HC-SR04, 5 cm threshold),
+            servo-mounted scanner for left/right clearance comparison, and real-time Bluetooth movement
+            tracking via HC-05 — transmitting FORWARD/LEFT/RIGHT/STOP labels to a paired device.
+            Integrates sensing, actuation, and wireless communication on a single Arduino Uno.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino Uno</span>
+            <span class="tag">HC-SR04</span>
+            <span class="tag">HC-05 Bluetooth</span>
+            <span class="tag">Servo Motor</span>
+            <span class="tag">EEE 3100</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Autonomous IR-Guided Line Follower Robot</span>
+            <span class="project-date">May 2026</span>
+          </div>
+          <p class="project-desc">
+            3-wheel differential drive autonomous robot using dual IR sensors and L298N motor driver.
+            Implemented two-sensor bang-bang control for real-time line tracking. Successfully navigated
+            straight sections, curves, and S-shaped tracks. Identified PID-based speed control as
+            a logical upgrade path over simple two-state control.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino Uno</span>
+            <span class="tag">IR Sensors</span>
+            <span class="tag">L298N</span>
+            <span class="tag">Differential Drive</span>
+            <span class="tag">EEE 3100</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-title">Bluetooth & Voice-Controlled Home Automation</span>
+            <span class="project-date">2026</span>
+          </div>
+          <p class="project-desc">
+            Wireless home automation prototype using Arduino Uno, HC-05 Bluetooth module, and
+            4-channel relay module. Receives voice commands from Android via Google Speech
+            Recognition and controls four AC appliances in real time. Includes 16×2 LCD for
+            live status feedback. Demonstrated 10m reliable range.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Arduino</span>
+            <span class="tag">HC-05</span>
+            <span class="tag">Relay Module</span>
+            <span class="tag">UART</span>
+            <span class="tag">Voice Control</span>
+            <span class="tag">EEE 3100</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="container">
+      <p class="section-label">Academic Research</p>
+      <h2>Research</h2>
+
+      <div class="research-card">
+        <div class="research-meta">2026 – Present &nbsp;·&nbsp; RUET EEE Department</div>
+        <h3>
+          Robustness Analysis of PID-Integrated AGC Under Various False Data Injection
+          Attacks in Smart Grid
+        </h3>
+        <br>
+        <p>
+          Working under a faculty supervisor specializing in PSO-based optimization and microgrid
+          control, toward a research publication. The work investigates how adversarial False Data
+          Injection (FDI) attacks on smart grid measurement signals can destabilize PID-integrated
+          Automatic Generation Control (AGC) systems — and evaluates controller robustness under
+          various attack scenarios.
+        </p>
+        <br>
+        <p>
+          Theoretical foundation includes Particle Swarm Optimization for controller tuning,
+          Fractional-Order PID design, Sliding Mode Control, and disturbance observer techniques.
+          Simulation platform: MATLAB/Simulink.
+        </p>
+        <br>
+        <div class="project-tags">
+          <span class="tag">Control Systems</span>
+          <span class="tag">Smart Grid</span>
+          <span class="tag">FDI Attacks</span>
+          <span class="tag">PID / AGC</span>
+          <span class="tag">PSO</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">Cybersecurity</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <p class="section-label">Get in Touch</p>
+      <h2>Contact</h2>
+      <p style="color:var(--muted); max-width:480px;">
+        Open to research collaborations, grad school discussions, and project conversations.
+      </p>
+      <div class="contact-grid">
+        <a class="contact-item" href="mailto:md.raiyanmahmud64@gmail.com">
+          <span class="contact-icon">✉</span>
+          md.raiyanmahmud64@gmail.com
+        </a>
+        <a class="contact-item" href="https://www.linkedin.com/in/md-raiyan-mahmud-4688aa356" target="_blank">
+          <span class="contact-icon">in</span>
+          Md. Raiyan Mahmud
+        </a>
+        <a class="contact-item" href="https://github.com/Raiyan2064" target="_blank">
+          <span class="contact-icon">⌥</span>
+          github.com/Raiyan2064
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Md. Raiyan Mahmud &nbsp;·&nbsp; EEE @ RUET &nbsp;·&nbsp; Bangladesh</p>
+  </footer>
+
+</body>
+</html>
