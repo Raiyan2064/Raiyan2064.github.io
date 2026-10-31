@@ -1,561 +1,894 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Md. Raiyan Mahmud — Control Systems Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Md. Raiyan Mahmud | EEE Student, Control Systems</title>
+<meta name="description" content="Md. Raiyan Mahmud, 3rd-year EEE student at RUET, Bangladesh. Research on the robustness of PID-integrated AGC under false data injection attacks in smart grids. Control systems, state-space methods and optimization-based control.">
+<meta name="theme-color" content="#f8f9fc" id="themeColor">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Md. Raiyan Mahmud | EEE Student, Control Systems">
+<meta property="og:description" content="Robustness of PID-integrated AGC under false data injection attacks. Control systems and smart grid security.">
+<meta property="og:url" content="https://raiyan2064.github.io/">
+<meta property="og:image" content="https://github.com/Raiyan2064.png?size=400">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='700' text-anchor='middle' fill='white'%3ERM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Md. Raiyan Mahmud",
+  "url": "https://raiyan2064.github.io/",
+  "email": "mailto:md.raiyanmahmud64@gmail.com",
+  "jobTitle": "Electrical and Electronic Engineering student",
+  "affiliation": { "@type": "CollegeOrUniversity", "name": "Rajshahi University of Engineering & Technology" },
+  "sameAs": [
+    "https://github.com/Raiyan2064",
+    "https://www.linkedin.com/in/md-raiyan-mahmud-4688aa356"
+  ]
+}
+</script>
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  try {
+    var t = localStorage.getItem('theme');
+    document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+  } catch (e) {}
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f8f9fc;
+  --surface: #ffffff;
+  --surface2: #f1f4fa;
+  --border: #e2e6ed;
+  --text: #1e293b;
+  --muted: #5b6b82;
+  --accent: #2563eb;
+  --accent2: #7c3aed;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --accent-line: rgba(37, 99, 235, 0.22);
+  --good: #15803d;
+  --good-soft: rgba(21, 128, 61, 0.10);
+  --good-line: rgba(21, 128, 61, 0.30);
+  --bad: #dc2626;
+  --warn: #d97706;
+  --grid: rgba(37, 99, 235, 0.07);
+  --header-bg: rgba(248, 249, 252, 0.84);
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 10px 28px rgba(15, 23, 42, 0.06);
+  --grad: linear-gradient(135deg, var(--accent), var(--accent2));
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0f1e;
+  --surface: #111a30;
+  --surface2: #16213b;
+  --border: #243252;
+  --text: #e6ebf5;
+  --muted: #9aa8c1;
+  --accent: #6b9bff;
+  --accent2: #a78bfa;
+  --accent-soft: rgba(107, 155, 255, 0.12);
+  --accent-line: rgba(107, 155, 255, 0.30);
+  --good: #4ade80;
+  --good-soft: rgba(74, 222, 128, 0.10);
+  --good-line: rgba(74, 222, 128, 0.30);
+  --bad: #f87171;
+  --warn: #fbbf24;
+  --grid: rgba(107, 155, 255, 0.08);
+  --header-bg: rgba(10, 15, 30, 0.80);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.35);
+}
 
-    :root {
-      --bg:        #f8f9fc;
-      --surface:   #ffffff;
-      --border:    #e2e6ed;
-      --accent:    #2563eb;
-      --accent2:   #7c3aed;
-      --text:      #1e293b;
-      --muted:     #64748b;
-      --heading:   #0f172a;
-      --grad-start:#2563eb;
-      --grad-end:  #7c3aed;
-    }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s, color 0.25s;
+}
+h1, h2, h3 { font-family: "Space Grotesk", Inter, system-ui, sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+.wrap { width: min(1120px, 100% - 2.5rem); margin-inline: auto; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: #fff; padding: 0.6rem 1rem; z-index: 100; border-radius: 0 0 8px 0; }
+.skip:focus { left: 0; }
+.grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    html { scroll-behavior: smooth; }
+/* Header */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--header-bg);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.site-header.scrolled { border-bottom-color: var(--border); }
+.bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 66px; }
+.brand { display: inline-flex; align-items: center; gap: 0.65rem; text-decoration: none; font-weight: 700; font-family: "Space Grotesk", Inter, sans-serif; }
+.mono { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px; background: var(--grad); color: #fff; font-size: 0.9rem; letter-spacing: 0.02em; }
+nav { display: flex; gap: 0.25rem; }
+nav a { text-decoration: none; padding: 0.45rem 0.8rem; border-radius: 10px; font-size: 0.93rem; font-weight: 500; color: var(--muted); transition: color 0.15s, background 0.15s; }
+nav a:hover { color: var(--text); background: var(--accent-soft); }
+nav a.active { color: var(--accent); background: var(--accent-soft); }
+.bar-actions { display: flex; gap: 0.4rem; }
+.icon-btn { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; transition: transform 0.15s; }
+.icon-btn:hover { transform: translateY(-1px); }
+.icon-btn svg { width: 19px; height: 19px; }
+.menu-btn { display: none; }
+[data-theme="dark"] .i-moon, [data-theme="light"] .i-sun { display: none; }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 15px;
-      line-height: 1.7;
-    }
+/* Hero */
+.hero { position: relative; overflow: hidden; padding: clamp(2.2rem, 6vw, 4.8rem) 0 clamp(2rem, 5vw, 3.5rem); }
+.hero::before {
+  content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at 75% 25%, #000 0, transparent 72%);
+  mask-image: radial-gradient(ellipse at 75% 25%, #000 0, transparent 72%);
+  pointer-events: none;
+}
+.hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.3fr 0.7fr; gap: clamp(1.5rem, 5vw, 3.5rem); align-items: center; }
+.chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.82rem; font-weight: 600; color: var(--good); background: var(--good-soft); border: 1px solid var(--good-line); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 0 var(--good-line); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 8px rgba(21, 128, 61, 0); } 100% { box-shadow: 0 0 0 0 rgba(21, 128, 61, 0); } }
+h1 { font-size: clamp(2.5rem, 7vw, 4.4rem); margin: 1rem 0 0.6rem; }
+.role { font-size: clamp(1rem, 2.4vw, 1.2rem); font-weight: 600; color: var(--text); }
+.role .sep { color: var(--accent); margin: 0 0.3rem; }
+.lead { margin-top: 1rem; max-width: 56ch; color: var(--muted); font-size: 1.06rem; }
+.cta { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.6rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.72rem 1.2rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn.primary { background: var(--grad); color: #fff; border-color: transparent; }
+.btn svg { width: 17px; height: 17px; }
 
-    /* ── LAYOUT ── */
-    .wrapper {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      min-height: 100vh;
-    }
+.portrait { position: relative; width: min(310px, 72vw); aspect-ratio: 1; margin-inline: auto; }
+.portrait::before { content: ""; position: absolute; inset: -9px; border-radius: 50%; background: conic-gradient(from 90deg, var(--accent), var(--accent2), var(--accent)); animation: spin 16s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.frame { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; border: 6px solid var(--bg); background: var(--surface2); display: grid; place-items: center; }
+.frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; }
+.frame.no-photo::after { content: "RM"; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 4rem; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    /* ── SIDEBAR ── */
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      padding: 2.5rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
+.stats { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.9rem; margin-top: clamp(2rem, 5vw, 3.2rem); }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1rem 1.2rem; box-shadow: var(--shadow); }
+.stat b { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.8rem; line-height: 1.1; }
+.stat span { font-size: 0.85rem; color: var(--muted); }
 
-    .profile-photo {
-      width: 110px; height: 110px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--border);
-      display: block;
-    }
+/* Sections */
+section { scroll-margin-top: 76px; }
+.section { padding: clamp(2.6rem, 6vw, 4.5rem) 0; }
+.sec-head { max-width: 860px; margin-bottom: 1.8rem; }
+.eyebrow { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
+.sec-head p.sub { margin-top: 0.7rem; color: var(--muted); max-width: 720px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; box-shadow: var(--shadow); }
+.tags { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1rem; }
+.tag { padding: 0.25rem 0.7rem; border-radius: 8px; font-size: 0.8rem; font-weight: 600; color: var(--accent); background: var(--accent-soft); border: 1px solid var(--accent-line); }
 
-    .profile-name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 0.3rem;
-    }
+.about-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 1.5rem; align-items: start; }
+.about-text p { color: var(--muted); font-size: 1.04rem; }
+.about-text p + p { margin-top: 1rem; }
+.about-text strong { color: var(--text); }
+.glance dl { display: grid; gap: 0.9rem; }
+.glance dt { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.glance dd { font-weight: 600; }
 
-    .profile-role {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+.research { border-left: 5px solid var(--accent); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; font-size: 0.9rem; color: var(--muted); }
+.pill { padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: var(--warn); border: 1px solid currentColor; }
+.research h3 { font-size: clamp(1.2rem, 3vw, 1.5rem); margin: 0.7rem 0; }
+.research p { color: var(--muted); }
+.research p + p { margin-top: 0.8rem; }
 
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      color: #16a34a;
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      padding: 0.25rem 0.65rem;
-      border-radius: 2rem;
-      width: fit-content;
-      margin-top: 0.5rem;
-    }
-    .status-badge::before { content: '●'; font-size: 0.55rem; }
+/* Lab */
+.lab { display: grid; grid-template-columns: 340px 1fr; gap: 1.2rem; align-items: start; }
+.controls { display: grid; gap: 1.1rem; }
+.presets { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.preset { padding: 0.4rem 0.85rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+.preset[aria-pressed="true"] { background: var(--grad); color: #fff; border-color: transparent; }
+.ctrl label { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.92rem; }
+.ctrl output { font-variant-numeric: tabular-nums; color: var(--accent); font-weight: 700; }
+.ctrl input[type="range"] { width: 100%; margin-top: 0.35rem; accent-color: var(--accent); height: 28px; }
+.ctrl select { width: 100%; margin-top: 0.4rem; padding: 0.6rem 0.7rem; border-radius: 10px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font: inherit; }
+.note { font-size: 0.86rem; color: var(--muted); border-left: 3px solid var(--warn); padding-left: 0.8rem; }
+.plot-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; min-height: 230px; }
+#plot { width: 100%; height: 100%; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.9rem 0 0.2rem; font-size: 0.85rem; color: var(--muted); }
+.legend i { display: inline-block; width: 22px; height: 0; border-top: 3px solid; vertical-align: middle; margin-right: 0.4rem; }
+.legend i.true { border-color: var(--accent); }
+.legend i.sensor { border-top-style: dashed; border-color: var(--warn); }
+.legend i.ref { border-top-width: 2px; border-top-style: dotted; border-color: var(--muted); }
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; margin-top: 0.8rem; }
+.metric { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.8rem; }
+.metric span { display: block; font-size: 0.74rem; color: var(--muted); font-weight: 600; }
+.metric b { font-family: "Space Grotesk", sans-serif; font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+.metric.bad b { color: var(--bad); }
+.fineprint { margin-top: 0.9rem; font-size: 0.82rem; color: var(--muted); }
 
-    /* NAV */
-    nav ul { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
-    nav a {
-      display: block;
-      padding: 0.45rem 0.75rem;
-      border-radius: 6px;
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: all 0.15s;
-    }
-    nav a:hover {
-      background: #f1f5f9;
-      color: var(--accent);
-    }
+/* Projects */
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.1rem; }
+.project { display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
+.project:hover { transform: translateY(-3px); border-color: var(--accent-line); }
+.project h3 { font-size: 1.15rem; margin: 0.5rem 0 0.4rem; }
+.project p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+.project .kicker { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent2); }
+.project .link { margin-top: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--accent); text-decoration: none; }
+.project .link:hover { text-decoration: underline; }
+.project.soon { border-style: dashed; background: transparent; box-shadow: none; }
+.project.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.05fr; padding: 0; overflow: hidden; }
+.featured .shot { background: var(--surface2); min-height: 260px; }
+.featured .shot img { width: 100%; height: 100%; object-fit: cover; }
+.featured .body { padding: clamp(1.2rem, 3vw, 1.8rem); display: flex; flex-direction: column; }
+.featured h3 { font-size: clamp(1.25rem, 3vw, 1.6rem); }
+.featured .body > p { flex: none; }
+.featured ul { margin: 0.9rem 0 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.95rem; }
+.featured li + li { margin-top: 0.4rem; }
+.keynums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 1rem; }
+.keynums div { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 0.55rem 0.8rem; }
+.keynums b { display: block; font-family: "Space Grotesk", sans-serif; font-size: 1.2rem; line-height: 1.2; }
+.keynums span { display: block; font-size: 0.76rem; line-height: 1.35; color: var(--muted); }
+.featured .status { margin-top: 1rem; font-size: 0.86rem; color: var(--muted); border-left: 3px solid var(--warn); padding-left: 0.8rem; }
+.featured.no-shot { grid-template-columns: 1fr; }
+.featured.no-shot .shot { display: none; }
+@media (max-width: 860px) {
+  .project.featured { grid-template-columns: 1fr; }
+  .featured .shot { min-height: 0; aspect-ratio: 4 / 3; }
+}
 
-    /* CONTACT LINKS */
-    .contact-links { display: flex; flex-direction: column; gap: 0.5rem; }
-    .contact-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.8rem;
-      color: var(--muted);
-      text-decoration: none;
-      word-break: break-all;
-      transition: color 0.15s;
-    }
-    .contact-link:hover { color: var(--accent); }
-    .contact-link svg { flex-shrink: 0; }
+/* Skills */
+.skills h3 { font-size: 1.05rem; margin-bottom: 0.2rem; }
+.skills .tags { margin-top: 0.8rem; }
+.tag.alt { color: var(--text); background: var(--surface2); border-color: var(--border); }
 
-    .cv-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1rem;
-      background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
-      color: #fff;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .cv-btn:hover { opacity: 0.88; }
+/* Education */
+.timeline { position: relative; display: grid; gap: 1.2rem; padding-left: 1.8rem; }
+.timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--accent), var(--accent2)); opacity: 0.5; }
+.t-item { position: relative; }
+.t-item::before { content: ""; position: absolute; left: -1.8rem; top: 1.45rem; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 3px solid var(--accent); }
+.t-item.next::before { border-style: dashed; border-color: var(--accent2); }
+.t-item h3 { font-size: 1.15rem; }
+.t-item .where { color: var(--accent); font-weight: 600; font-size: 0.92rem; }
+.t-item p { color: var(--muted); margin-top: 0.4rem; font-size: 0.95rem; }
 
-    /* ── MAIN ── */
-    .main {
-      padding: 3rem 3.5rem;
-      max-width: 820px;
-    }
+/* Contact */
+.contact { text-align: center; padding: clamp(1.8rem, 5vw, 3rem) 1.5rem; background: var(--surface); }
+.contact h2 { margin-bottom: 0.6rem; }
+.contact p { color: var(--muted); max-width: 52ch; margin: 0 auto; }
+.contact .eyebrow { color: var(--accent); max-width: none; }
+.contact .cta { justify-content: center; }
+.footer { padding: 2rem 0 3rem; text-align: center; color: var(--muted); font-size: 0.88rem; }
 
-    /* SECTION */
-    .section { margin-bottom: 3.5rem; }
+/* Reveal */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.js .reveal.in { opacity: 1; transform: none; }
 
-    .section-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-      padding-bottom: 0.6rem;
-      border-bottom: 2px solid;
-      border-image: linear-gradient(90deg, var(--grad-start), var(--grad-end)) 1;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ABOUT */
-    .about-text p {
-      color: var(--muted);
-      margin-bottom: 0.9rem;
-      font-size: 0.9rem;
-    }
-    .about-text p:last-child { margin-bottom: 0; }
-
-    /* RESEARCH */
-    .research-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 10px;
-      padding: 1.4rem 1.5rem;
-    }
-    .research-card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--heading);
-      margin-bottom: 0.35rem;
-      line-height: 1.45;
-    }
-    .research-meta {
-      font-size: 0.78rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 0.85rem;
-    }
-    .research-card p {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-bottom: 0.7rem;
-    }
-    .research-card p:last-of-type { margin-bottom: 1rem; }
-
-    /* PROJECTS */
-    .project-item {
-      padding: 1.25rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .project-item:last-child { border-bottom: none; }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 0.4rem;
-    }
-    .project-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--heading);
-    }
-    .project-date {
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-      padding-top: 0.1rem;
-    }
-    .project-desc {
-      font-size: 0.86rem;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
-    .project-link {
-      font-size: 0.8rem;
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .project-link:hover { text-decoration: underline; }
-
-    /* TAGS */
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
-    .tag {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      font-weight: 500;
-      background: #eff6ff;
-      color: var(--accent);
-      border: 1px solid #bfdbfe;
-    }
-
-    /* SKILLS */
-    .skills-group { margin-bottom: 1rem; }
-    .skills-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--heading);
-      margin-bottom: 0.4rem;
-    }
-    .skills-list {
-      font-size: 0.86rem;
-      color: var(--muted);
-    }
-
-    /* EDUCATION */
-    .edu-item { margin-bottom: 1.25rem; }
-    .edu-degree {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--heading);
-    }
-    .edu-school {
-      font-size: 0.86rem;
-      color: var(--muted);
-    }
-    .edu-meta {
-      font-size: 0.78rem;
-      color: var(--accent2);
-      font-weight: 500;
-      margin-top: 0.15rem;
-    }
-
-    /* FOOTER */
-    footer {
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .wrapper { grid-template-columns: 1fr; }
-      .sidebar {
-        position: static;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .main { padding: 2rem 1.25rem; }
-    }
-  </style>
+@media (max-width: 900px) {
+  .lab { grid-template-columns: 1fr; }
+  .lab .plot-card { order: -1; }
+  .about-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 860px) {
+  .menu-btn { display: grid; }
+  nav { position: absolute; left: 0; right: 0; top: 66px; flex-direction: column; padding: 0.6rem 1.25rem 1rem; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: var(--shadow); display: none; }
+  nav.open { display: flex; }
+  nav a { padding: 0.75rem 0.8rem; font-size: 1rem; }
+  .hero-grid { grid-template-columns: 1fr; }
+  .portrait { order: -1; width: min(230px, 58vw); }
+  .hero-copy { text-align: center; }
+  .lead { margin-inline: auto; }
+  .cta { justify-content: center; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .plot-wrap { aspect-ratio: 4 / 3; }
+  .brand-name { display: none; }
+  .cta .btn { flex: 1 1 calc(50% - 0.4rem); justify-content: center; }
+  .cta .btn.primary { flex-basis: 100%; }
+  .stat b { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal { opacity: 1; transform: none; }
+}
+</style>
 </head>
 <body>
-<div class="wrapper">
+<a class="skip" href="#main">Skip to content</a>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-
-    <div>
-      <p class="profile-name">Md. Raiyan Mahmud</p>
-      <p class="profile-role">
-        EEE Student, RUET<br>
-        Aspiring Control Systems Engineer
-      </p>
-      <span class="status-badge">Open to Research Collaborations</span>
-    </div>
-
-    <nav>
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#research">Research</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Md. Raiyan Mahmud, back to top"><span class="mono">RM</span><span class="brand-name">Raiyan Mahmud</span></a>
+    <nav id="nav" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#lab">Lab</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
     </nav>
-
-    <div class="contact-links">
-      <a class="contact-link" href="mailto:md.raiyanmahmud64@gmail.com">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-        md.raiyanmahmud64@gmail.com
-      </a>
-      <a class="contact-link" href="https://www.linkedin.com/in/md-raiyan-mahmud-4688aa356" target="_blank">
-        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn
-      </a>
-      <a class="contact-link" href="https://github.com/Raiyan2064" target="_blank">
-        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        github.com/Raiyan2064
-      </a>
-      <a class="contact-link" href="https://raiyan064.wordpress.com" target="_blank">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        WordPress Site
-      </a>
+    <div class="bar-actions">
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+      </button>
+      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
     </div>
+  </div>
+</header>
 
-    <a class="cv-btn" href="mailto:md.raiyanmahmud64@gmail.com">
-      ↓ Request CV
-    </a>
+<main id="main">
 
-    <p style="font-size:0.72rem; color:var(--muted);">
-      © 2026 Md. Raiyan Mahmud
-    </p>
-
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="main">
-
-    <!-- ABOUT -->
-    <div class="section" id="about">
-      <h2 class="section-title">About Me</h2>
-      <div class="about-text">
-        <p>
-          Hello, I am Raiyan! I am a 3rd-year Electrical & Electronic Engineering student at
-          Rajshahi University of Engineering & Technology (RUET), Bangladesh, with a CGPA of 3.66.
-          My core focus is Control Systems — classical control theory, state-space methods,
-          and optimization-based control.
-        </p>
-        <p>
-          I am currently working on a research paper investigating the robustness of
-          PID-Integrated Automatic Generation Control (AGC) under False Data Injection (FDI)
-          attacks in smart grid environments — work that sits at the intersection of control
-          theory and cybersecurity. I am building toward graduate school in Europe (EMJMD 2027).
-        </p>
-        <p>
-          Before university, I was a cadet at Rangpur Cadet College — an experience that
-          shaped how I approach discipline, teamwork, and long-term goals. Outside academics,
-          I am curious about geopolitics, defense & aerospace, and telecommunications.
-        </p>
+<section class="hero" aria-label="Introduction">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><span class="dot"></span>Open to research collaborations</span>
+      <h1>Md. Raiyan <span class="grad">Mahmud</span></h1>
+      <p class="role">EEE Student, RUET <span class="sep">/</span> Aspiring Control Systems Engineer</p>
+      <p class="lead">I study how feedback systems stay stable under uncertainty, and how they break under cyber attacks. My current research looks at PID-integrated automatic generation control in smart grids under false data injection.</p>
+      <div class="cta">
+        <a class="btn primary" href="#research">View research
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn" href="#lab">Try the PID lab</a>
+        <a class="btn" href="mailto:md.raiyanmahmud64@gmail.com?subject=CV%20request&amp;body=Hello%20Raiyan%2C%0A%0AI%20would%20like%20to%20request%20your%20CV.%0A%0AThank%20you.">Request CV</a>
       </div>
     </div>
+    <figure class="portrait">
+      <div class="frame">
+        <img id="photo" src="photo.jpg" width="400" height="400" alt="Portrait of Md. Raiyan Mahmud">
+      </div>
+    </figure>
+  </div>
+  <div class="wrap stats">
+    <div class="stat"><b class="grad">3.66</b><span>CGPA</span></div>
+    <div class="stat"><b class="grad">3rd year</b><span>B.Sc. in EEE, RUET</span></div>
+    <div class="stat"><b class="grad">1</b><span>Research paper in progress</span></div>
+    <div class="stat"><b class="grad">2027</b><span>EMJMD applications</span></div>
+  </div>
+</section>
 
-    <!-- RESEARCH -->
-    <div class="section" id="research">
-      <h2 class="section-title">Research</h2>
-      <div class="research-card">
-        <p class="research-meta">2026 – Present &nbsp;·&nbsp; RUET EEE Department</p>
-        <h3>Robustness Analysis of PID-Integrated AGC Under Various False Data Injection Attacks in Smart Grid</h3>
-        <p>
-          Working under a faculty supervisor specializing in PSO-based optimization and microgrid
-          control, toward a research publication. The work investigates how adversarial FDI attacks
-          on smart grid measurement signals destabilize PID-integrated AGC systems, and evaluates
-          controller robustness under various attack scenarios.
-        </p>
-        <p>
-          Theoretical foundation includes Particle Swarm Optimization (PSO) for controller tuning,
-          Fractional-Order PID design, Sliding Mode Control, and disturbance observer techniques.
-          Simulation platform: MATLAB/Simulink.
-        </p>
-        <div class="tags">
-          <span class="tag">Control Systems</span>
-          <span class="tag">Smart Grid</span>
-          <span class="tag">FDI Attacks</span>
-          <span class="tag">PID / AGC</span>
-          <span class="tag">PSO</span>
-          <span class="tag">MATLAB</span>
-          <span class="tag">Cybersecurity</span>
+<section id="about" class="section" aria-labelledby="about-h">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">About</p><h2 id="about-h">Control theory meets cybersecurity</h2></div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>Hello, I am Raiyan! I am a 3rd-year Electrical &amp; Electronic Engineering student at Rajshahi University of Engineering &amp; Technology (RUET), Bangladesh, with a CGPA of 3.66. My core focus is <strong>Control Systems</strong>: classical control theory, state-space methods, and optimization-based control.</p>
+        <p>I am currently working on a research paper investigating the robustness of PID-Integrated Automatic Generation Control (AGC) under False Data Injection (FDI) attacks in smart grid environments: work that sits at the intersection of control theory and cybersecurity. I am building toward graduate school in Europe (EMJMD 2027).</p>
+        <p>Before university, I was a cadet at Rangpur Cadet College: an experience that shaped how I approach discipline, teamwork, and long-term goals. Outside academics, I am curious about geopolitics, defense &amp; aerospace, and telecommunications.</p>
+      </div>
+      <aside class="card glance reveal" aria-label="At a glance">
+        <dl>
+          <div><dt>University</dt><dd>Rajshahi University of Engineering &amp; Technology</dd></div>
+          <div><dt>Focus</dt><dd>Control Systems</dd></div>
+          <div><dt>Research</dt><dd>PID-integrated AGC under FDI attacks</dd></div>
+          <div><dt>Next step</dt><dd>EMJMD graduate programs, 2027</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="research" class="section" aria-labelledby="research-h">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Research</p><h2 id="research-h">Keeping the grid stable when sensors lie</h2></div>
+    <article class="card research reveal">
+      <div class="meta"><span>2026 - Present</span><span>&middot;</span><span>RUET EEE Department</span><span class="pill">In progress</span></div>
+      <h3>Robustness Analysis of PID-Integrated AGC Under Various False Data Injection Attacks in Smart Grid</h3>
+      <p>Working under a faculty supervisor specializing in PSO-based optimization and microgrid control, toward a research publication. The work investigates how adversarial FDI attacks on smart grid measurement signals destabilize PID-integrated AGC systems, and evaluates controller robustness under various attack scenarios.</p>
+      <p>Theoretical foundation includes Particle Swarm Optimization (PSO) for controller tuning, Fractional-Order PID design, Sliding Mode Control, and disturbance observer techniques. Simulation platform: MATLAB/Simulink.</p>
+      <div class="tags">
+        <span class="tag">Control Systems</span><span class="tag">Smart Grid</span><span class="tag">FDI Attacks</span><span class="tag">PID / AGC</span><span class="tag">PSO</span><span class="tag">MATLAB</span><span class="tag">Cybersecurity</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="lab" class="section" aria-labelledby="lab-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Interactive</p>
+      <h2 id="lab-h">Control Lab: a PID loop under attack</h2>
+      <p class="sub">Tune the controller, then let an attacker tamper with the sensor at t = 10 s. The controller regulates what it reads, not what is true. That gap is the core idea behind FDI attacks.</p>
+    </div>
+    <div class="lab reveal">
+      <div class="card controls">
+        <div class="presets" role="group" aria-label="Controller presets">
+          <button class="preset" type="button" data-preset="tuned" aria-pressed="true">Well tuned</button>
+          <button class="preset" type="button" data-preset="osc" aria-pressed="false">Oscillatory</button>
+          <button class="preset" type="button" data-preset="unstable" aria-pressed="false">Unstable</button>
+        </div>
+        <div class="ctrl"><label for="kp">Proportional gain Kp <output id="kpV">3.0</output></label><input id="kp" type="range" min="0" max="10" step="0.1" value="3"></div>
+        <div class="ctrl"><label for="ki">Integral gain Ki <output id="kiV">2.0</output></label><input id="ki" type="range" min="0" max="5" step="0.1" value="2"></div>
+        <div class="ctrl"><label for="kd">Derivative gain Kd <output id="kdV">1.5</output></label><input id="kd" type="range" min="0" max="3" step="0.1" value="1.5"></div>
+        <div class="ctrl">
+          <label for="attack">Attack on the sensor</label>
+          <select id="attack">
+            <option value="none">No attack</option>
+            <option value="bias" selected>Bias injection</option>
+            <option value="ramp">Ramp injection</option>
+            <option value="scale">Scaling attack</option>
+          </select>
+        </div>
+        <p class="note" id="attackNote"></p>
+      </div>
+      <div class="card plot-card">
+        <div class="plot-wrap"><canvas id="plot" role="img" aria-label="Step response plot"></canvas></div>
+        <div class="legend">
+          <span><i class="true"></i>True output y(t)</span>
+          <span><i class="sensor"></i>What the controller sees</span>
+          <span><i class="ref"></i>Reference</span>
+        </div>
+        <div class="metrics">
+          <div class="metric"><span>Overshoot</span><b id="mOs">-</b></div>
+          <div class="metric"><span>Settling time (2%)</span><b id="mTs">-</b></div>
+          <div class="metric" id="mTrueBox"><span>True output at 20 s</span><b id="mTrue">-</b></div>
+          <div class="metric"><span>Sensor reads at 20 s</span><b id="mSens">-</b></div>
         </div>
       </div>
     </div>
+    <p class="fineprint">Illustrative plant G(s) = 1 / (s&sup2; + 1.2s + 1) with a unit step reference and a filtered derivative term. This is a teaching model, not my research model.</p>
+  </div>
+</section>
 
-    <!-- PROJECTS -->
-    <div class="section" id="projects">
-      <h2 class="section-title">Projects</h2>
-
-      <div class="project-item">
-        <div class="project-header">
-          <span class="project-title">Arduino-Based Ultrasonic Radar System</span>
-          <span class="project-date">May – Jun 2026</span>
+<section id="projects" class="section" aria-labelledby="projects-h">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Projects</p><h2 id="projects-h">Things I have built</h2></div>
+    <div class="grid3">
+      <article class="card project featured reveal">
+        <div class="shot">
+          <img src="capstone.jpg" width="1200" height="900" loading="lazy" alt="The IoT-Based Smart DC Microgrid prototype on a board: battery, charger module, ESP32 on a breadboard, fan and DC motor" onerror="this.closest('.featured').classList.add('no-shot')">
         </div>
-        <p class="project-desc">
-          Dual-sensor radar combining HC-SR04 ultrasonic ranging and RCWL-0516 microwave Doppler
-          detection for object tracking and presence sensing, visualized through a radar-style
-          graphical interface replicating conventional radar principles at small scale.
-        </p>
-        <div class="tags">
-          <span class="tag">Arduino</span>
-          <span class="tag">HC-SR04</span>
-          <span class="tag">RCWL-0516</span>
-          <span class="tag">Radar Visualization</span>
+        <div class="body">
+          <span class="kicker">Capstone I &middot; Latest project</span>
+          <h3>IoT-Based Smart DC Microgrid</h3>
+          <p>A bench-scale DC microgrid built around a 6 V, 4.5 Ah sealed lead-acid battery, an ESP32 controller and an INA219 current and voltage sensor. A charger keeps the battery topped up while the ESP32 switches three loads (an LED, a fan and a DC motor), protects the system, and reports every event to a phone through Telegram.</p>
+          <ul>
+            <li><strong>Priority load shedding:</strong> as the battery voltage falls, the motor is cut first, then the fan, then the LED.</li>
+            <li><strong>Automatic protection:</strong> the overload limit is set at boot (about 0.61 A), and a short circuit above 1.2 A switches everything off and latches.</li>
+            <li><strong>Works without WiFi:</strong> protection keeps running, and alerts are delivered once the network returns.</li>
+          </ul>
+          <div class="keynums">
+            <div><b>6 V</b><span>4.5 Ah lead-acid battery</span></div>
+            <div><b>0.61 A</b><span>automatic overload limit</span></div>
+            <div><b>9</b><span>bench tests passed</span></div>
+          </div>
+          <p class="status">Nine bench tests passed on 28 October 2026; four of them ran on an earlier firmware version and will be repeated on the final one. Low-battery shedding was checked with a simulated battery voltage, and a full real discharge run is still to be done.</p>
+          <div class="tags"><span class="tag">ESP32</span><span class="tag">INA219</span><span class="tag">MOSFET load switching</span><span class="tag">Telegram alerts</span><span class="tag">Battery protection</span><span class="tag">DC microgrid</span></div>
         </div>
-        <br>
-        <a class="project-link" href="https://lnkd.in/p/guDhyaYU" target="_blank">↗ View on LinkedIn</a>
-      </div>
-
-      <div class="project-item">
-        <div class="project-header">
-          <span class="project-title">Smart Line Follower with Obstacle Avoidance & Bluetooth Tracking</span>
-          <span class="project-date">May 2026</span>
-        </div>
-        <p class="project-desc">
-          Extended line follower with ultrasonic obstacle detection (HC-SR04, 5 cm threshold),
-          servo-mounted scanner for left/right clearance comparison, and real-time Bluetooth
-          movement tracking via HC-05 — transmitting FORWARD/LEFT/RIGHT/STOP labels to a paired
-          device. Integrates sensing, actuation, and wireless communication on a single Arduino Uno.
-        </p>
-        <div class="tags">
-          <span class="tag">Arduino Uno</span>
-          <span class="tag">HC-SR04</span>
-          <span class="tag">HC-05 Bluetooth</span>
-          <span class="tag">Servo Motor</span>
-          <span class="tag">EEE 3100</span>
-        </div>
-      </div>
-
-      <div class="project-item">
-        <div class="project-header">
-          <span class="project-title">Autonomous IR-Guided Line Follower Robot</span>
-          <span class="project-date">May 2026</span>
-        </div>
-        <p class="project-desc">
-          3-wheel differential drive robot using dual IR sensors and L298N motor driver.
-          Two-sensor bang-bang control for real-time line tracking. Successfully navigated
-          straight sections, curves, and S-shaped tracks.
-        </p>
-        <div class="tags">
-          <span class="tag">Arduino Uno</span>
-          <span class="tag">IR Sensors</span>
-          <span class="tag">L298N</span>
-          <span class="tag">Differential Drive</span>
-          <span class="tag">EEE 3100</span>
-        </div>
-      </div>
-
-      <div class="project-item">
-        <div class="project-header">
-          <span class="project-title">Bluetooth & Voice-Controlled Home Automation</span>
-          <span class="project-date">2026</span>
-        </div>
-        <p class="project-desc">
-          Wireless home automation prototype using Arduino Uno, HC-05 Bluetooth module, and
-          4-channel relay module. Receives voice commands from Android via Google Speech Recognition
-          and controls four AC appliances in real time with 16×2 LCD status feedback. Demonstrated
-          10 m reliable range.
-        </p>
-        <div class="tags">
-          <span class="tag">Arduino</span>
-          <span class="tag">HC-05</span>
-          <span class="tag">Relay Module</span>
-          <span class="tag">UART</span>
-          <span class="tag">Voice Control</span>
-          <span class="tag">EEE 3100</span>
-        </div>
-      </div>
-
+      </article>
+      <article class="card project reveal">
+        <span class="kicker">Research simulation</span>
+        <h3>PID-Integrated AGC in MATLAB/Simulink</h3>
+        <p>Simulation platform for the AGC robustness study under FDI attacks. Research in progress, code is not public yet.</p>
+        <div class="tags"><span class="tag">MATLAB</span><span class="tag">Simulink</span><span class="tag">PSO</span></div>
+      </article>
+      <article class="card project reveal">
+        <span class="kicker">Embedded, EEE 3100</span>
+        <h3>Arduino Ultrasonic Radar</h3>
+        <p>Team project built on an Arduino with an ultrasonic sensor, presented with an A0 poster for the Electronics Shop Practice course.</p>
+        <div class="tags"><span class="tag">Arduino</span><span class="tag">Ultrasonic sensing</span></div>
+      </article>
+      <article class="card project reveal">
+        <span class="kicker">Embedded, EEE 3100</span>
+        <h3>Line-Following Robot with Obstacle Avoidance</h3>
+        <p>Arduino-based robot that follows a line and steers clear of obstacles on its path.</p>
+        <div class="tags"><span class="tag">Arduino</span><span class="tag">Robotics</span></div>
+      </article>
+      <article class="card project reveal">
+        <span class="kicker">Embedded, EEE 3100</span>
+        <h3>Bluetooth and Voice-Controlled Home Automation</h3>
+        <p>Home appliance control over Bluetooth, with voice commands as an input method.</p>
+        <div class="tags"><span class="tag">Arduino</span><span class="tag">Bluetooth</span></div>
+      </article>
+      <article class="card project reveal">
+        <span class="kicker">On this page</span>
+        <h3>Interactive PID vs FDI Lab</h3>
+        <p>A live closed-loop simulation that shows how sensor attacks mislead a PID controller.</p>
+        <a class="link" href="#lab">Open the lab &rarr;</a>
+      </article>
+      <article class="card project soon reveal">
+        <span class="kicker">Coming next</span>
+        <h3>More on the way</h3>
+        <p>Control labs and further capstone work will appear here as they are completed.</p>
+      </article>
     </div>
+  </div>
+</section>
 
-    <!-- SKILLS -->
-    <div class="section" id="skills">
-      <h2 class="section-title">Skills</h2>
-      <div class="skills-group">
-        <p class="skills-label">Technical</p>
-        <p class="skills-list">MATLAB / Simulink, Python (NumPy, basics), Control Systems Design, PID & Fractional-Order PID, Particle Swarm Optimization, Arduino / Embedded C, Circuit Design</p>
+<section id="skills" class="section" aria-labelledby="skills-h">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Skills</p><h2 id="skills-h">Tools and methods</h2></div>
+    <div class="grid3 skills">
+      <div class="card reveal">
+        <h3>Control and optimization</h3>
+        <div class="tags"><span class="tag">PID control</span><span class="tag">Fractional-order PID</span><span class="tag">State-space methods</span><span class="tag">Sliding mode control</span><span class="tag">Disturbance observers</span><span class="tag">Particle swarm optimization</span><span class="tag">Root locus, Bode, Nyquist</span><span class="tag">Routh-Hurwitz</span></div>
       </div>
-      <div class="skills-group">
-        <p class="skills-label">Software & Tools</p>
-        <p class="skills-list">MATLAB, Arduino IDE, Microsoft Office Suite, LaTeX (basic), Git / GitHub</p>
+      <div class="card reveal">
+        <h3>Power and smart grid</h3>
+        <div class="tags"><span class="tag">Automatic generation control</span><span class="tag">False data injection attacks</span><span class="tag">Power system analysis</span><span class="tag">Y-bus and Z-bus</span><span class="tag">Per-unit calculations</span><span class="tag">DC microgrid protection</span></div>
       </div>
-      <div class="skills-group">
-        <p class="skills-label">Languages</p>
-        <p class="skills-list">Bengali (native), English (professional)</p>
+      <div class="card reveal">
+        <h3>Software and hardware</h3>
+        <div class="tags"><span class="tag alt">MATLAB</span><span class="tag alt">Simulink</span><span class="tag alt">Arduino</span><span class="tag alt">ESP32 (IoT)</span><span class="tag alt">Proteus (PCB design)</span><span class="tag alt">Python (learning)</span></div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- EDUCATION -->
-    <div class="section" id="education">
-      <h2 class="section-title">Education</h2>
-
-      <div class="edu-item">
-        <p class="edu-degree">B.Sc. in Electrical & Electronic Engineering</p>
-        <p class="edu-school">Rajshahi University of Engineering & Technology (RUET), Bangladesh</p>
-        <p class="edu-meta">October 2023 – Present &nbsp;·&nbsp; CGPA: 3.66 &nbsp;·&nbsp; Section A, Roll 2201042</p>
+<section id="education" class="section" aria-labelledby="edu-h">
+  <div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Education</p><h2 id="edu-h">Background</h2></div>
+    <div class="timeline">
+      <div class="t-item card reveal">
+        <h3>B.Sc. in Electrical and Electronic Engineering</h3>
+        <div class="where">Rajshahi University of Engineering &amp; Technology (RUET), Bangladesh</div>
+        <p>3rd year, CGPA 3.66. Focus on Control Systems.</p>
+        <div class="tags"><span class="tag alt">Control Systems</span><span class="tag alt">Computational Methods</span><span class="tag alt">Electrical Machines II</span><span class="tag alt">Power Systems</span><span class="tag alt">Communication Engineering</span></div>
       </div>
-
-      <div class="edu-item">
-        <p class="edu-degree">Higher Secondary Certificate (HSC)</p>
-        <p class="edu-school">Rangpur Cadet College, Rangpur, Bangladesh</p>
-        <p class="edu-meta">Completed 2022 &nbsp;·&nbsp; Former Cadet</p>
+      <div class="t-item card reveal">
+        <h3>Rangpur Cadet College</h3>
+        <div class="where">Former cadet</div>
+        <p>Where I learned discipline, teamwork, and how to plan for the long term.</p>
       </div>
-
+      <div class="t-item next card reveal">
+        <h3>Next: graduate studies in Europe</h3>
+        <div class="where">EMJMD programs, 2027 applications</div>
+        <p>Building a research profile in control systems and smart grid security.</p>
+      </div>
     </div>
+  </div>
+</section>
 
-    <!-- CONTACT -->
-    <div class="section" id="contact">
-      <h2 class="section-title">Contact</h2>
-      <p style="font-size:0.875rem; color:var(--muted); margin-bottom:1rem;">
-        Open to research collaborations, grad school discussions, and project conversations.
-        Best reached by email.
-      </p>
-      <p style="font-size:0.875rem; color:var(--muted);">
-        📧 <a href="mailto:md.raiyanmahmud64@gmail.com" style="color:var(--accent);">md.raiyanmahmud64@gmail.com</a><br>
-        📞 (+880) 1345697787
-      </p>
+<section id="contact" class="section" aria-labelledby="contact-h">
+  <div class="wrap">
+    <div class="card contact reveal">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-h">Let us talk about control systems</h2>
+      <p>I am open to research collaborations and to conversations about control systems and smart grid security.</p>
+      <div class="cta">
+        <a class="btn primary" href="mailto:md.raiyanmahmud64@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Email me</a>
+        <button class="btn" id="copyBtn" type="button" data-email="md.raiyanmahmud64@gmail.com">Copy email</button>
+        <a class="btn" href="https://www.linkedin.com/in/md-raiyan-mahmud-4688aa356" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.001 5.001A2.5 2.5 0 014.98 3.5zM3 9.75h4V21H3zM9.5 9.75h3.83v1.54h.05c.53-.95 1.84-1.95 3.78-1.95 4.04 0 4.79 2.66 4.79 6.12V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.69V21h-4z"/></svg>
+          LinkedIn</a>
+        <a class="btn" href="https://github.com/Raiyan2064" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GitHub</a>
+        <!-- To show your WordPress site here, put its address in href, then delete the word "hidden". -->
+        <a class="btn" id="wpLink" href="#" target="_blank" rel="noopener" hidden>WordPress Site</a>
+      </div>
     </div>
+  </div>
+</section>
 
-    <footer>
-      © 2026 Md. Raiyan Mahmud &nbsp;·&nbsp; EEE @ RUET &nbsp;·&nbsp; Bangladesh
-    </footer>
+</main>
 
-  </main>
-</div>
+<footer class="footer">
+  <div class="wrap">&copy; 2026 Md. Raiyan Mahmud. Built with plain HTML, CSS and JavaScript.</div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Header shadow, mobile menu */
+  var header = document.querySelector('.site-header');
+  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var nav = document.getElementById('nav');
+  var menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      nav.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open menu');
+    }
+  });
+
+  /* Theme toggle */
+  var themeColor = document.getElementById('themeColor');
+  function syncThemeColor() { themeColor.setAttribute('content', root.getAttribute('data-theme') === 'dark' ? '#0a0f1e' : '#f8f9fc'); }
+  syncThemeColor();
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    syncThemeColor();
+    window.dispatchEvent(new Event('themechange'));
+  });
+
+  /* Active nav link and reveal on scroll */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if ('IntersectionObserver' in window) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting && byId[en.target.id]) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          byId[en.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(byId).forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
+
+    var rev = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); rev.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (el) { rev.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Portrait: photo.jpg, then GitHub avatar, then initials */
+  var photo = document.getElementById('photo');
+  var frame = photo.parentElement;
+  var fallbacks = ['https://github.com/Raiyan2064.png?size=480'];
+  function onPhotoError() {
+    if (fallbacks.length) { photo.src = fallbacks.shift(); }
+    else { photo.style.display = 'none'; frame.classList.add('no-photo'); }
+  }
+  photo.addEventListener('error', onPhotoError);
+  if (photo.complete && photo.naturalWidth === 0) { onPhotoError(); }
+
+  /* Copy email */
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function () {
+    var email = copyBtn.getAttribute('data-email');
+    var done = function () {
+      var old = copyBtn.textContent;
+      copyBtn.textContent = 'Copied';
+      setTimeout(function () { copyBtn.textContent = old; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(email).then(done, function () { window.prompt('Copy this email address:', email); });
+    } else {
+      window.prompt('Copy this email address:', email);
+    }
+  });
+
+  /* Control lab */
+  (function () {
+    var cv = document.getElementById('plot');
+    var ctx = cv.getContext('2d');
+    var T = 20, TA = 10, DT = 0.002, TAU = 0.05, STEP = 5;
+    var kp = document.getElementById('kp'), ki = document.getElementById('ki'), kd = document.getElementById('kd');
+    var kpV = document.getElementById('kpV'), kiV = document.getElementById('kiV'), kdV = document.getElementById('kdV');
+    var atkSel = document.getElementById('attack'), note = document.getElementById('attackNote');
+    var mOs = document.getElementById('mOs'), mTs = document.getElementById('mTs'), mTrue = document.getElementById('mTrue'), mSens = document.getElementById('mSens'), mTrueBox = document.getElementById('mTrueBox');
+    var presetBtns = Array.prototype.slice.call(document.querySelectorAll('.preset'));
+    var presets = { tuned: [3, 2, 1.5], osc: [9, 0, 0], unstable: [0.5, 4, 0] };
+    var notes = {
+      none: 'No attack. The sensor reports the true output, so the controller and the plant agree.',
+      bias: 'Bias injection: from t = 10 s the attacker adds a constant +0.4 to the measurement. The controller regulates what it reads, so the true output is pushed away from the reference while the sensor still looks fine.',
+      ramp: 'Ramp injection: the attacker adds an offset that grows by 0.05 per second. Slow drift is harder to notice than a sudden jump.',
+      scale: 'Scaling attack: the attacker multiplies the measurement by 0.7. The controller sees a smaller output and pushes the true output higher.'
+    };
+    var data = null, progress = 1, animId = 0;
+
+    function simulate(Kp, Ki, Kd, atk) {
+      var N = Math.round(T / DT), n = Math.floor(N / STEP) + 1;
+      var ts = new Float32Array(n), ys = new Float32Array(n), ms = new Float32Array(n);
+      var x1 = 0, x2 = 0, I = 0, xf = 0, j = 0, diverged = false;
+      for (var k = 0; k <= N; k++) {
+        var t = k * DT, m = x1;
+        if (t >= TA) {
+          if (atk === 'bias') m = x1 + 0.4;
+          else if (atk === 'ramp') m = x1 + 0.05 * (t - TA);
+          else if (atk === 'scale') m = x1 * 0.7;
+        }
+        if (k % STEP === 0) { ts[j] = t; ys[j] = x1; ms[j] = m; j++; }
+        var e = 1 - m;
+        var ed = (e - xf) / TAU;
+        var u = Kp * e + Ki * I + Kd * ed;
+        var dx2 = u - 1.2 * x2 - x1;
+        x1 += x2 * DT; x2 += dx2 * DT; I += e * DT; xf += ed * DT;
+        if (!isFinite(x1) || Math.abs(x1) > 1e4) { diverged = true; break; }
+      }
+      if (diverged) {
+        var lastY = ys[Math.max(j - 1, 0)], lastM = ms[Math.max(j - 1, 0)];
+        for (; j < n; j++) { ts[j] = j * STEP * DT; ys[j] = lastY; ms[j] = lastM; }
+      }
+      return { ts: ts, ys: ys, ms: ms, n: n, diverged: diverged };
+    }
+
+    function analyse(r) {
+      var peak = -Infinity, lastOut = -1, count = 0, maxAbs = 0, i;
+      for (i = 0; i < r.n; i++) {
+        maxAbs = Math.max(maxAbs, Math.abs(r.ys[i]));
+        if (r.ts[i] < TA) {
+          count++;
+          peak = Math.max(peak, r.ys[i]);
+          if (Math.abs(r.ys[i] - 1) > 0.02) lastOut = i;
+        }
+      }
+      var unstable = r.diverged || maxAbs > 6;
+      var settled = lastOut < count - 1;
+      return {
+        unstable: unstable,
+        overshoot: Math.max(0, (peak - 1) * 100),
+        settle: lastOut === -1 ? 0 : (settled ? r.ts[lastOut + 1] : null),
+        yEnd: r.ys[r.n - 1],
+        mEnd: r.ms[r.n - 1]
+      };
+    }
+
+    function fmt(v) { return Math.abs(v) >= 100 ? (v < 0 ? '< -100' : '> 100') : v.toFixed(2); }
+
+    function updateMetrics(a, atk) {
+      if (a.unstable) {
+        mOs.textContent = 'Unstable'; mTs.textContent = 'Never';
+        mTrue.textContent = 'Diverges'; mSens.textContent = 'Diverges';
+        mTrueBox.classList.add('bad');
+      } else {
+        mOs.textContent = a.overshoot.toFixed(1) + '%';
+        mTs.textContent = a.settle === null ? 'Not settled' : a.settle.toFixed(1) + ' s';
+        mTrue.textContent = fmt(a.yEnd);
+        mSens.textContent = fmt(a.mEnd);
+        mTrueBox.classList.toggle('bad', Math.abs(a.yEnd - 1) > 0.05);
+      }
+      var label = 'Step response of a PID loop. ' + (a.unstable ? 'The loop is unstable.' :
+        'Overshoot ' + a.overshoot.toFixed(1) + ' percent. True output at 20 seconds is ' + fmt(a.yEnd) + ', sensor reads ' + fmt(a.mEnd) + '.') +
+        (atk === 'none' ? ' No attack.' : ' Attack starts at 10 seconds.');
+      cv.setAttribute('aria-label', label);
+    }
+
+    function css(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+
+    function draw() {
+      if (!data) return;
+      var rect = cv.getBoundingClientRect();
+      var w = rect.width, h = rect.height;
+      if (w < 10 || h < 10) return;
+      var dpr = window.devicePixelRatio || 1;
+      if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
+        cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      var cAcc = css('--accent'), cMut = css('--muted'), cBor = css('--border'), cWarn = css('--warn'), cBad = css('--bad'), cTxt = css('--text');
+      var atk = atkSel.value;
+      var L = 40, R = 14, Tp = 14, B = 46;
+      var pw = w - L - R, ph = h - Tp - B;
+
+      var lo = 0, hi = 1.5, i;
+      for (i = 0; i < data.n; i++) {
+        lo = Math.min(lo, data.ys[i], data.ms[i]);
+        hi = Math.max(hi, data.ys[i], data.ms[i]);
+      }
+      hi = Math.min(hi * 1.08, 3); lo = lo < 0 ? Math.max(lo - 0.1, -1) : -0.1;
+      var xs = function (t) { return L + (t / T) * pw; };
+      var yp = function (v) { return Tp + (1 - (v - lo) / (hi - lo)) * ph; };
+
+      ctx.font = '11px Inter, system-ui, sans-serif';
+      ctx.textBaseline = 'middle'; ctx.textAlign = 'right';
+      ctx.lineWidth = 1; ctx.strokeStyle = cBor; ctx.fillStyle = cMut;
+      var stepY = (hi - lo) > 2.6 ? 1 : 0.5;
+      for (var v = Math.ceil(lo / stepY) * stepY; v <= hi + 1e-9; v += stepY) {
+        var gy = Math.round(yp(v)) + 0.5;
+        ctx.beginPath(); ctx.moveTo(L, gy); ctx.lineTo(L + pw, gy); ctx.stroke();
+        ctx.fillText(v.toFixed(1), L - 7, gy);
+      }
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      for (var tx = 0; tx <= T; tx += 5) {
+        var gx = Math.round(xs(tx)) + 0.5;
+        ctx.beginPath(); ctx.moveTo(gx, Tp); ctx.lineTo(gx, Tp + ph); ctx.stroke();
+        ctx.fillText(String(tx), gx, Tp + ph + 8);
+      }
+      ctx.textAlign = 'center'; ctx.fillText('time (s)', L + pw / 2, Tp + ph + 26);
+
+      ctx.save();
+      ctx.beginPath(); ctx.rect(L, Tp, pw, ph); ctx.clip();
+
+      ctx.setLineDash([2, 4]); ctx.strokeStyle = cMut; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(L, yp(1)); ctx.lineTo(L + pw, yp(1)); ctx.stroke();
+
+      if (atk !== 'none') {
+        ctx.setLineDash([6, 5]); ctx.strokeStyle = cBad; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(xs(TA), Tp); ctx.lineTo(xs(TA), Tp + ph); ctx.stroke();
+      }
+
+      var upto = Math.max(2, Math.floor(progress * data.n));
+      function series(arr, color, dash, lw) {
+        ctx.setLineDash(dash); ctx.strokeStyle = color; ctx.lineWidth = lw; ctx.lineJoin = 'round';
+        ctx.beginPath();
+        for (var k = 0; k < upto; k++) {
+          var px = xs(data.ts[k]), py = yp(arr[k]);
+          if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.stroke();
+      }
+      if (atk !== 'none') series(data.ms, cWarn, [7, 5], 2);
+      series(data.ys, cAcc, [], 2.8);
+      ctx.restore();
+
+      if (atk !== 'none') {
+        ctx.setLineDash([]); ctx.fillStyle = cBad; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+        ctx.fillText('attack starts', xs(TA) + 6, Tp + 4);
+      }
+      ctx.setLineDash([]);
+      ctx.fillStyle = cTxt;
+    }
+
+    function recompute() {
+      var Kp = parseFloat(kp.value), Ki = parseFloat(ki.value), Kd = parseFloat(kd.value), atk = atkSel.value;
+      kpV.textContent = Kp.toFixed(1); kiV.textContent = Ki.toFixed(1); kdV.textContent = Kd.toFixed(1);
+      note.textContent = notes[atk];
+      data = simulate(Kp, Ki, Kd, atk);
+      updateMetrics(analyse(data), atk);
+      presetBtns.forEach(function (b) {
+        var p = presets[b.getAttribute('data-preset')];
+        b.setAttribute('aria-pressed', String(p[0] === Kp && p[1] === Ki && p[2] === Kd));
+      });
+      draw();
+    }
+
+    [kp, ki, kd].forEach(function (el) { el.addEventListener('input', recompute); });
+    atkSel.addEventListener('change', recompute);
+    presetBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var p = presets[b.getAttribute('data-preset')];
+        kp.value = p[0]; ki.value = p[1]; kd.value = p[2];
+        recompute();
+      });
+    });
+    window.addEventListener('themechange', draw);
+    if ('ResizeObserver' in window) new ResizeObserver(draw).observe(cv.parentElement);
+    else window.addEventListener('resize', draw);
+
+    recompute();
+
+    /* Draw the curves in once when the lab first scrolls into view */
+    function animateIn() {
+      if (reduce) { progress = 1; draw(); return; }
+      var start = null;
+      progress = 0; draw();
+      function frame(ts) {
+        if (start === null) start = ts;
+        progress = Math.min(1, (ts - start) / 1400);
+        draw();
+        if (progress < 1) animId = requestAnimationFrame(frame);
+      }
+      animId = requestAnimationFrame(frame);
+    }
+    if ('IntersectionObserver' in window) {
+      var once = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { once.disconnect(); animateIn(); }
+      }, { threshold: 0.35 });
+      once.observe(cv);
+    }
+  })();
+})();
+</script>
 </body>
 </html>
