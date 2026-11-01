@@ -463,10 +463,10 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
     <div class="reveal">
       <div class="ptabs" role="tablist" aria-label="Projects">
       <button class="ptab" role="tab" id="tab-capstone" aria-controls="panel-capstone" aria-selected="true" tabindex="0" type="button">Capstone</button>
+      <button class="ptab" role="tab" id="tab-radar" aria-controls="panel-radar" aria-selected="false" tabindex="-1" type="button">Radar</button>
       <button class="ptab" role="tab" id="tab-lfr" aria-controls="panel-lfr" aria-selected="false" tabindex="-1" type="button">Line Follower</button>
       <button class="ptab" role="tab" id="tab-ha" aria-controls="panel-ha" aria-selected="false" tabindex="-1" type="button">Home Automation</button>
       <button class="ptab" role="tab" id="tab-dcm" aria-controls="panel-dcm" aria-selected="false" tabindex="-1" type="button">DC Motor</button>
-      <button class="ptab" role="tab" id="tab-radar" aria-controls="panel-radar" aria-selected="false" tabindex="-1" type="button">Radar</button>
       <button class="ptab" role="tab" id="tab-agc" aria-controls="panel-agc" aria-selected="false" tabindex="-1" type="button">AGC Research</button>
       </div>
       <div class="ppanels">
@@ -482,6 +482,20 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
           <p class="note">Nine bench tests passed on 28 October 2026; four ran on an earlier firmware and will be repeated. Low-battery shedding was checked with a simulated voltage, and a full real discharge run is still to be done.</p>
           <div class="tags"><span class="tag">ESP32</span><span class="tag">INA219</span><span class="tag">MOSFET load switching</span><span class="tag">Telegram alerts</span><span class="tag">Battery protection</span></div>
           <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/smart-dc-microgrid" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a><a class="btn" href="https://drive.google.com/file/d/1FuYdFt64qmQV-WyudCxst3YyCsJLnlnZ/view" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg> Watch demo</a></div>
+        </div>
+      </article>
+      <article class="card ppanel" role="tabpanel" id="panel-radar" aria-labelledby="tab-radar" tabindex="0">
+        <div class="shot">
+          <img src="arduino-radar.jpg" width="1280" height="960" loading="lazy" alt="The Arduino radar prototype connected to a laptop that shows the radar display" style="object-position:48% 50%">
+        </div>
+        <div class="body">
+          <span class="kicker">Embedded &middot; EEE 3100 &middot; Group project</span>
+          <h3>Arduino-Based Ultrasonic Radar</h3>
+          <p>A low-cost radar-style detector on an Arduino Uno. A servo sweeps an HC-SR04 to measure distance and angle, a second fixed HC-SR04 estimates approach speed, an RCWL-0516 senses motion, and a laptop draws the radar display.</p>
+          <div class="keynums"><div><b>2</b><span>HC-SR04 ultrasonic sensors</span></div><div><b>1</b><span>RCWL-0516 motion sensor</span></div><div><b>1,130 BDT</b><span>total build cost</span></div></div>
+          <p class="note">Range, speed thresholds and accuracy in the report are design targets, not measurements. The sketch in the repository follows the report and is still to be tested on the hardware.</p>
+          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">HC-SR04</span><span class="tag">RCWL-0516</span><span class="tag">Servo</span><span class="tag">Processing</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/arduino-based-radar" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a><a class="btn" href="https://drive.google.com/file/d/1vy8tJJpiTDtDfKLlMJdKPFxwBwXRB3BL/view" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg> Watch demo</a></div>
         </div>
       </article>
       <article class="card ppanel" role="tabpanel" id="panel-lfr" aria-labelledby="tab-lfr" tabindex="0">
@@ -521,20 +535,6 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
           <div class="keynums"><div><b>0-255</b><span>PWM speed range</span></div><div><b>L293D</b><span>H-bridge motor driver</span></div><div><b>2</b><span>direction buttons</span></div></div>
           <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">L293D</span><span class="tag">PWM</span><span class="tag">H-bridge</span></div>
           <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/dc-motor-control-using-arduino" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a></div>
-        </div>
-      </article>
-      <article class="card ppanel" role="tabpanel" id="panel-radar" aria-labelledby="tab-radar" tabindex="0">
-        <div class="shot">
-          <img src="arduino-radar.jpg" width="1280" height="960" loading="lazy" alt="The Arduino radar prototype connected to a laptop that shows the radar display" style="object-position:48% 50%">
-        </div>
-        <div class="body">
-          <span class="kicker">Embedded &middot; EEE 3100 &middot; Group project</span>
-          <h3>Arduino-Based Ultrasonic Radar</h3>
-          <p>A low-cost radar-style detector on an Arduino Uno. A servo sweeps an HC-SR04 to measure distance and angle, a second fixed HC-SR04 estimates approach speed, an RCWL-0516 senses motion, and a laptop draws the radar display.</p>
-          <div class="keynums"><div><b>2</b><span>HC-SR04 ultrasonic sensors</span></div><div><b>1</b><span>RCWL-0516 motion sensor</span></div><div><b>1,130 BDT</b><span>total build cost</span></div></div>
-          <p class="note">Range, speed thresholds and accuracy in the report are design targets, not measurements. The sketch in the repository follows the report and is still to be tested on the hardware.</p>
-          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">HC-SR04</span><span class="tag">RCWL-0516</span><span class="tag">Servo</span><span class="tag">Processing</span></div>
-          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/arduino-based-radar" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a><a class="btn" href="https://drive.google.com/file/d/1vy8tJJpiTDtDfKLlMJdKPFxwBwXRB3BL/view" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg> Watch demo</a></div>
         </div>
       </article>
       <article class="card ppanel" role="tabpanel" id="panel-agc" aria-labelledby="tab-agc" tabindex="0">
