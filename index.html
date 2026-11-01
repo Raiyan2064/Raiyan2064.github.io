@@ -223,34 +223,35 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
 .fineprint { margin-top: 0.9rem; font-size: 0.82rem; color: var(--muted); }
 
 /* Projects */
-.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1.1rem; }
-.project { display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s; }
-.project:hover { transform: translateY(-3px); border-color: var(--accent-line); }
-.project h3 { font-size: 1.15rem; margin: 0.5rem 0 0.4rem; }
-.project p { color: var(--muted); font-size: 0.95rem; flex: 1; }
-.project .kicker { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent2); }
-.project .link { margin-top: 1rem; font-weight: 600; font-size: 0.9rem; color: var(--accent); text-decoration: none; }
-.project .link:hover { text-decoration: underline; }
-.project.soon { border-style: dashed; background: transparent; box-shadow: none; }
-.project.featured { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.05fr; padding: 0; overflow: hidden; }
-.featured .shot { background: var(--surface2); min-height: 260px; }
-.featured .shot img { width: 100%; height: 100%; object-fit: cover; }
-.featured .body { padding: clamp(1.2rem, 3vw, 1.8rem); display: flex; flex-direction: column; }
-.featured h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.75rem); }
-.featured .body > p { flex: none; }
-.featured ul { margin: 0.9rem 0 0; padding-left: 1.1rem; color: var(--muted); font-size: 0.95rem; }
-.featured li + li { margin-top: 0.4rem; }
+.ptabs { display: none; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 1rem; }
+.js .ptabs { display: flex; }
+.ptab { font: inherit; font-size: 0.9rem; font-weight: 600; padding: 0.5rem 0.95rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: color 0.15s, border-color 0.15s, background 0.15s; }
+.ptab:hover { color: var(--text); border-color: var(--accent-line); }
+.ptab[aria-selected="true"] { background: var(--grad); color: #fff; border-color: transparent; }
+.ppanels { display: grid; gap: 1.1rem; }
+.js .ppanels { gap: 0; }
+.ppanel { display: grid; grid-template-columns: 1fr 1.05fr; padding: 0; overflow: hidden; }
+.js .ppanel { grid-area: 1 / 1; visibility: hidden; opacity: 0; transition: opacity 0.25s ease, visibility 0s linear 0.25s; }
+.js .ppanel.active { visibility: visible; opacity: 1; transition: opacity 0.25s ease; }
+.ppanel .shot { position: relative; background: var(--surface2); min-height: 280px; }
+.ppanel .shot img, .ppanel .shot svg.art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ppanel .body { padding: clamp(1.2rem, 3vw, 1.8rem); display: flex; flex-direction: column; }
+.ppanel .kicker { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent2); }
+.ppanel h3 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.3rem, 3vw, 1.65rem); margin: 0.45rem 0 0.6rem; }
+.ppanel .body > p { color: var(--muted); font-size: 0.96rem; }
 .keynums { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-top: 1rem; }
 .keynums div { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 0.55rem 0.8rem; }
 .keynums b { display: block; font-family: var(--mono); font-weight: 600; font-size: 1.1rem; line-height: 1.25; }
 .keynums span { display: block; font-size: 0.76rem; line-height: 1.35; color: var(--muted); }
-.featured .status { margin-top: 1rem; font-size: 0.86rem; color: var(--muted); border-left: 3px solid var(--warn); padding-left: 0.8rem; }
-.featured .proj-cta { margin-top: 1.1rem; }
-.featured.no-shot { grid-template-columns: 1fr; }
-.featured.no-shot .shot { display: none; }
+.ppanel .body > p.note { margin-top: 1rem; font-size: 0.84rem; border-left: 3px solid var(--warn); padding-left: 0.8rem; }
+.ppanel .tags { margin-top: 1rem; }
+.ppanel .cta { margin-top: auto; padding-top: 1.2rem; }
+.ppanel:focus-visible { outline-offset: -3px; }
 @media (max-width: 860px) {
-  .project.featured { grid-template-columns: 1fr; }
-  .featured .shot { min-height: 0; aspect-ratio: 4 / 3; }
+  .ppanel { grid-template-columns: 1fr; }
+  .js .ppanel { grid-area: auto; display: none; }
+  .js .ppanel.active { display: grid; }
+  .ppanel .shot { min-height: 0; aspect-ratio: 4 / 3; }
 }
 
 /* Skills */
@@ -453,71 +454,117 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
 </section>
 
 <section id="projects" class="section" aria-labelledby="projects-h">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-gh" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 16 16"><path d="M8 0a8 8 0 100 16A8 8 0 008 0zM6.5 4.6l5 3.4-5 3.4V4.6z"/></symbol>
+  </svg>
   <div class="wrap">
     <div class="sec-head reveal"><p class="eyebrow">Projects</p><h2 id="projects-h">Things I have built</h2></div>
-    <div class="grid3">
-      <article class="card project featured reveal">
+    <div class="reveal">
+      <div class="ptabs" role="tablist" aria-label="Projects">
+      <button class="ptab" role="tab" id="tab-capstone" aria-controls="panel-capstone" aria-selected="true" tabindex="0" type="button">Capstone</button>
+      <button class="ptab" role="tab" id="tab-lfr" aria-controls="panel-lfr" aria-selected="false" tabindex="-1" type="button">Line Follower</button>
+      <button class="ptab" role="tab" id="tab-ha" aria-controls="panel-ha" aria-selected="false" tabindex="-1" type="button">Home Automation</button>
+      <button class="ptab" role="tab" id="tab-dcm" aria-controls="panel-dcm" aria-selected="false" tabindex="-1" type="button">DC Motor</button>
+      <button class="ptab" role="tab" id="tab-radar" aria-controls="panel-radar" aria-selected="false" tabindex="-1" type="button">Radar</button>
+      <button class="ptab" role="tab" id="tab-agc" aria-controls="panel-agc" aria-selected="false" tabindex="-1" type="button">AGC Research</button>
+      </div>
+      <div class="ppanels">
+      <article class="card ppanel active" role="tabpanel" id="panel-capstone" aria-labelledby="tab-capstone" tabindex="0">
         <div class="shot">
-          <img src="capstone.jpg" width="1200" height="900" loading="lazy" alt="The IoT-Based Smart DC Microgrid prototype on a board: battery, charger module, ESP32 on a breadboard, fan and DC motor" onerror="this.closest('.featured').classList.add('no-shot')">
+          <img src="capstone.jpg" width="1200" height="900" loading="lazy" alt="The IoT-Based Smart DC Microgrid prototype on a board: battery, charger module, ESP32 on a breadboard, fan and DC motor" style="object-position:50% 50%">
         </div>
         <div class="body">
           <span class="kicker">Capstone I &middot; Latest project</span>
           <h3>IoT-Based Smart DC Microgrid</h3>
-          <p>A bench-scale DC microgrid built around a 6 V, 4.5 Ah sealed lead-acid battery, an ESP32 controller and an INA219 current and voltage sensor. A charger keeps the battery topped up while the ESP32 switches three loads (an LED, a fan and a DC motor), protects the system, and reports every event to a phone through Telegram.</p>
-          <ul>
-            <li><strong>Priority load shedding:</strong> as the battery voltage falls, the motor is cut first, then the fan, then the LED.</li>
-            <li><strong>Automatic protection:</strong> the overload limit is set at boot (about 0.61 A), and a short circuit above 1.2 A switches everything off and latches.</li>
-            <li><strong>Works without WiFi:</strong> protection keeps running, and alerts are delivered once the network returns.</li>
-          </ul>
-          <div class="keynums">
-            <div><b>6 V</b><span>4.5 Ah lead-acid battery</span></div>
-            <div><b>0.61 A</b><span>automatic overload limit</span></div>
-            <div><b>9</b><span>bench tests passed</span></div>
-          </div>
-          <p class="status">Nine bench tests passed on 28 October 2026; four of them ran on an earlier firmware version and will be repeated on the final one. Low-battery shedding was checked with a simulated battery voltage, and a full real discharge run is still to be done.</p>
-          <div class="tags"><span class="tag">ESP32</span><span class="tag">INA219</span><span class="tag">MOSFET load switching</span><span class="tag">Telegram alerts</span><span class="tag">Battery protection</span><span class="tag">DC microgrid</span></div>
-          <div class="cta proj-cta">
-            <a class="btn primary" href="https://github.com/Raiyan2064/smart-dc-microgrid" target="_blank" rel="noopener">
-              <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              View on GitHub</a>
-          </div>
+          <p>A bench-scale DC microgrid on a 6 V, 4.5 Ah lead-acid battery. An ESP32 with an INA219 sensor switches an LED, a fan and a DC motor, sheds them in priority order as the battery voltage falls, trips on overload or short circuit, and sends Telegram alerts.</p>
+          <div class="keynums"><div><b>6 V</b><span>4.5 Ah lead-acid battery</span></div><div><b>0.61 A</b><span>automatic overload limit</span></div><div><b>9</b><span>bench tests passed</span></div></div>
+          <p class="note">Nine bench tests passed on 28 October 2026; four ran on an earlier firmware and will be repeated. Low-battery shedding was checked with a simulated voltage, and a full real discharge run is still to be done.</p>
+          <div class="tags"><span class="tag">ESP32</span><span class="tag">INA219</span><span class="tag">MOSFET load switching</span><span class="tag">Telegram alerts</span><span class="tag">Battery protection</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/smart-dc-microgrid" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a><a class="btn" href="https://drive.google.com/file/d/1FuYdFt64qmQV-WyudCxst3YyCsJLnlnZ/view" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg> Watch demo</a></div>
         </div>
       </article>
-      <article class="card project reveal">
-        <span class="kicker">Research simulation</span>
-        <h3>PID-Integrated AGC in MATLAB/Simulink</h3>
-        <p>Simulation platform for the AGC robustness study under FDI attacks. Research in progress, code is not public yet.</p>
-        <div class="tags"><span class="tag">MATLAB</span><span class="tag">Simulink</span><span class="tag">PSO</span></div>
+      <article class="card ppanel" role="tabpanel" id="panel-lfr" aria-labelledby="tab-lfr" tabindex="0">
+        <div class="shot">
+          <img src="lfr.jpg" width="615" height="817" loading="lazy" alt="The line-following robot on a black tape track with a green obstacle box ahead" style="object-position:50% 55%">
+        </div>
+        <div class="body">
+          <span class="kicker">Embedded &middot; EEE 3100 &middot; Experiment 09</span>
+          <h3>Line-Following Robot with Obstacle Avoidance</h3>
+          <p>An Arduino Uno robot that follows a black line with two IR sensors. When an obstacle appears ahead, it stops, looks left and right with a servo-mounted HC-SR04, and goes around on the side with more space.</p>
+          <div class="keynums"><div><b>2</b><span>IR line sensors</span></div><div><b>5 cm</b><span>obstacle trigger distance</span></div><div><b>110/255</b><span>motor PWM speed</span></div></div>
+          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">IR sensors</span><span class="tag">HC-SR04</span><span class="tag">Servo</span><span class="tag">PWM</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/line-following-and-obstacle-avoidance-robot" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a></div>
+        </div>
       </article>
-      <article class="card project reveal">
-        <span class="kicker">Embedded, EEE 3100</span>
-        <h3>Arduino Ultrasonic Radar</h3>
-        <p>Team project built on an Arduino with an ultrasonic sensor, presented with an A0 poster for the Electronics Shop Practice course.</p>
-        <div class="tags"><span class="tag">Arduino</span><span class="tag">Ultrasonic sensing</span></div>
+      <article class="card ppanel" role="tabpanel" id="panel-ha" aria-labelledby="tab-ha" tabindex="0">
+        <div class="shot">
+          <img src="home-automation.jpg" width="1100" height="1673" loading="lazy" alt="The home automation circuit: Arduino Uno, HC-05 Bluetooth module and a 4-channel relay module on a breadboard" style="object-position:50% 45%">
+        </div>
+        <div class="body">
+          <span class="kicker">Embedded &middot; EEE 3100 &middot; Experiment 06</span>
+          <h3>Bluetooth and Voice-Controlled Home Automation</h3>
+          <p>An Arduino Uno switches four loads through a 4-channel relay module. Commands reach it from an Android phone over an HC-05 Bluetooth module, spoken through a voice-control app.</p>
+          <div class="keynums"><div><b>4</b><span>relay channels</span></div><div><b>HC-05</b><span>Bluetooth module</span></div><div><b>Voice</b><span>Android app input</span></div></div>
+          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">HC-05</span><span class="tag">Relay module</span><span class="tag">Android</span><span class="tag">Voice control</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/home-automation-using-arduino" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a></div>
+        </div>
       </article>
-      <article class="card project reveal">
-        <span class="kicker">Embedded, EEE 3100</span>
-        <h3>Line-Following Robot with Obstacle Avoidance</h3>
-        <p>Arduino-based robot that follows a line and steers clear of obstacles on its path.</p>
-        <div class="tags"><span class="tag">Arduino</span><span class="tag">Robotics</span></div>
+      <article class="card ppanel" role="tabpanel" id="panel-dcm" aria-labelledby="tab-dcm" tabindex="0">
+        <div class="shot">
+          <img src="dc-motor.jpg" width="1600" height="944" loading="lazy" alt="A DC motor connected to an Arduino and L293D motor driver on a breadboard" style="object-position:12% 50%">
+        </div>
+        <div class="body">
+          <span class="kicker">Embedded &middot; EEE 3100 &middot; Experiment 07</span>
+          <h3>DC Motor Speed and Direction Control</h3>
+          <p>An Arduino Uno drives a DC motor through an L293D H-bridge. A potentiometer sets the speed with PWM, two push buttons choose forward or reverse, and the state is printed on the Serial Monitor.</p>
+          <div class="keynums"><div><b>0-255</b><span>PWM speed range</span></div><div><b>L293D</b><span>H-bridge motor driver</span></div><div><b>2</b><span>direction buttons</span></div></div>
+          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">L293D</span><span class="tag">PWM</span><span class="tag">H-bridge</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/dc-motor-control-using-arduino" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a></div>
+        </div>
       </article>
-      <article class="card project reveal">
-        <span class="kicker">Embedded, EEE 3100</span>
-        <h3>Bluetooth and Voice-Controlled Home Automation</h3>
-        <p>Home appliance control over Bluetooth, with voice commands as an input method.</p>
-        <div class="tags"><span class="tag">Arduino</span><span class="tag">Bluetooth</span></div>
+      <article class="card ppanel" role="tabpanel" id="panel-radar" aria-labelledby="tab-radar" tabindex="0">
+        <div class="shot">
+          <img src="arduino-radar.jpg" width="1280" height="960" loading="lazy" alt="The Arduino radar prototype connected to a laptop that shows the radar display" style="object-position:48% 50%">
+        </div>
+        <div class="body">
+          <span class="kicker">Embedded &middot; EEE 3100 &middot; Group project</span>
+          <h3>Arduino-Based Ultrasonic Radar</h3>
+          <p>A low-cost radar-style detector on an Arduino Uno. A servo sweeps an HC-SR04 to measure distance and angle, a second fixed HC-SR04 estimates approach speed, an RCWL-0516 senses motion, and a laptop draws the radar display.</p>
+          <div class="keynums"><div><b>2</b><span>HC-SR04 ultrasonic sensors</span></div><div><b>1</b><span>RCWL-0516 motion sensor</span></div><div><b>1,130 BDT</b><span>total build cost</span></div></div>
+          <p class="note">Range, speed thresholds and accuracy in the report are design targets, not measurements. The sketch in the repository follows the report and is still to be tested on the hardware.</p>
+          <div class="tags"><span class="tag">Arduino Uno</span><span class="tag">HC-SR04</span><span class="tag">RCWL-0516</span><span class="tag">Servo</span><span class="tag">Processing</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="https://github.com/Raiyan2064/arduino-based-radar" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-gh"/></svg> View on GitHub</a><a class="btn" href="https://drive.google.com/file/d/1vy8tJJpiTDtDfKLlMJdKPFxwBwXRB3BL/view" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#i-play"/></svg> Watch demo</a></div>
+        </div>
       </article>
-      <article class="card project reveal">
-        <span class="kicker">On this page</span>
-        <h3>Interactive PID vs FDI Lab</h3>
-        <p>A live closed-loop simulation that shows how sensor attacks mislead a PID controller.</p>
-        <a class="link" href="#lab">Open the lab &rarr;</a>
+      <article class="card ppanel" role="tabpanel" id="panel-agc" aria-labelledby="tab-agc" tabindex="0">
+        <div class="shot">
+          <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Schematic of a controller output holding the setpoint, and drifting away during a false data injection window" preserveAspectRatio="xMidYMid meet">
+            <rect width="400" height="300" fill="var(--surface2)"/>
+            <rect x="215" y="30" width="105" height="215" fill="var(--bad)" opacity="0.10"/>
+            <text x="267" y="48" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--bad)">FDI window</text>
+            <line x1="40" y1="245" x2="375" y2="245" stroke="var(--muted)" stroke-width="1.2"/>
+            <line x1="40" y1="30" x2="40" y2="245" stroke="var(--muted)" stroke-width="1.2"/>
+            <line x1="40" y1="95" x2="375" y2="95" stroke="var(--muted)" stroke-width="1" stroke-dasharray="5 5"/>
+            <path d="M40 245 C70 245 85 78 125 84 S170 96 215 95 S320 95 375 95" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M215 95 C240 95 250 150 275 160 S320 120 345 105 S365 97 375 96" fill="none" stroke="var(--bad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 0"/>
+            <text x="46" y="88" font-family="var(--mono)" font-size="11" fill="var(--muted)">setpoint</text>
+            <text x="48" y="268" font-family="var(--mono)" font-size="11" fill="var(--accent)">nominal</text>
+            <text x="120" y="268" font-family="var(--mono)" font-size="11" fill="var(--bad)">under attack</text>
+            <text x="372" y="288" text-anchor="end" font-family="var(--mono)" font-size="10" fill="var(--muted)">schematic, not simulation output</text>
+          </svg>
+        </div>
+        <div class="body">
+          <span class="kicker">Research &middot; In progress</span>
+          <h3>Robustness of PID-Integrated AGC Under FDI Attacks</h3>
+          <p>A study of how false data injection on smart grid measurement signals destabilizes PID-integrated automatic generation control, and how robust the controller stays across attack scenarios. Simulated in MATLAB/Simulink under a RUET faculty supervisor.</p>
+          <div class="keynums"><div><b>PID</b><span>controller in the AGC loop</span></div><div><b>FDI</b><span>attack class studied</span></div><div><b>PSO</b><span>tuning method</span></div></div>
+          <p class="note">Work in progress. The code is not public yet.</p>
+          <div class="tags"><span class="tag">Control Systems</span><span class="tag">FDI Attacks</span><span class="tag">PID / AGC</span><span class="tag">PSO</span><span class="tag">MATLAB</span></div>
+          <div class="cta proj-cta"><a class="btn primary" href="#research">Research details</a><a class="btn" href="#lab">Try the PID vs FDI lab</a></div>
+        </div>
       </article>
-      <article class="card project soon reveal">
-        <span class="kicker">Coming next</span>
-        <h3>More on the way</h3>
-        <p>Control labs and further capstone work will appear here as they are completed.</p>
-      </article>
+      </div>
     </div>
   </div>
 </section>
@@ -658,6 +705,32 @@ h2 { font-size: clamp(1.7rem, 4.2vw, 2.4rem); }
   } else {
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
+
+  /* Project tabs */
+  (function () {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.ptab'));
+    if (!tabs.length) return;
+    function pick(tab, focus) {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).classList.toggle('active', on);
+      });
+      if (focus) tab.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { pick(t, false); });
+      t.addEventListener('keydown', function (e) {
+        var j = null;
+        if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+        else if (e.key === 'ArrowLeft') j = (i + tabs.length - 1) % tabs.length;
+        else if (e.key === 'Home') j = 0;
+        else if (e.key === 'End') j = tabs.length - 1;
+        if (j !== null) { e.preventDefault(); pick(tabs[j], true); }
+      });
+    });
+  })();
 
   /* Portrait: photo.jpg, then GitHub avatar, then initials */
   var photo = document.getElementById('photo');
